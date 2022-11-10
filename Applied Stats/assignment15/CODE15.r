@@ -1,0 +1,1 @@
+setwd("C:/Users/upist/Desktop/Applied Stats/assignment15")
