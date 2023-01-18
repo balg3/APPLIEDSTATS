@@ -6,6 +6,8 @@ library(tidyverse)
 library(dplyr)
 
 
+#PROBLEM NUMBA 1
+
 
 df1 <- data.frame(ChosBodLen, RejBodLen)
 
@@ -27,9 +29,6 @@ first1 <- ggplot(df1)+
   )
 
 first1
-
-lapply(fishdata, mean)
-lapply(fishdata, sd)
 
 second1 <- ggplot(fishdata)+
   coord_flip()+
@@ -70,3 +69,34 @@ third1 <- ggplot(fishdata)+
   )
 
 third1
+
+#uhhhhhhhhhhhhhhhhhh data summary
+
+lapply(fishdata, mean)
+lapply(fishdata, sd)
+
+t.test(ChosBodLen, RejBodLen)
+
+t.test(ChosAmplitude, RejAmplitude)
+
+t.test(ChosDuration, RejDuration)
+
+#Comparisons >:)
+
+lenvdur <- ggplot(fishdata)+
+  geom_point(size = 2.5, aes(ChosBodLen, ChosDuration, color = "Chosen"))+
+  geom_point(size = 2.5, aes(RejBodLen, RejDuration, color = "Rejected"))+
+  theme_light()+
+  labs(
+    title = "EOD Duration vs. Body Length",
+    x = "Body Length",
+    y = "EOD Duration",
+    color = "Mating Status"
+  )+
+  theme(
+    legend.position = c(0.92, 0.1),
+    
+  )+
+  scale_color_manual(values = c("Chosen" = "#42d4f5","Rejected" = "#ed736d"))
+    
+lenvdur
