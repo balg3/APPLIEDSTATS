@@ -1,0 +1,16 @@
+#1
+setwd("C:/Users/torrealb000/Desktop/Applied Stats/day1log")
+donner <- read.csv("C:/Users/torrealb000/Desktop/Applied Stats/day1log/donner.csv")
+attach(donner)
+library(ggplot2)
+
+#2
+lm1<-lm(survived~age)
+summary(lm1)
+#3    
+#4
+
+residuals1 <- resid(lm1)
+plot(residuals1, main = "Residual Plot of Age to Predict Survival", ylab = "Residuals", xlab = "Age")+
+  abline(0,0)
+
