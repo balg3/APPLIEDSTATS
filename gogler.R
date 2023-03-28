@@ -66,3 +66,17 @@ ggplot(jager, aes(x = .fitted, y = .resid)) +
   )
 
 summary(glm(FirstGen ~ GPA, family = binomial(link = "logit")))
+
+####################################################################
+one <- lm(GPA ~ HSGPA + factor(FirstGen))
+summary(one)
+two <- lm(GPA ~ HSGPA + factor(FirstGen) + SATV)
+summary(two)
+three <- lm(GPA ~ HSGPA + factor(FirstGen) + SATM)
+summary(three)
+four <- lm(GPA ~ HSGPA + factor(FirstGen) + SATM +SATV)
+summary(four)
+five <- lm(GPA ~ HSGPA + factor(FirstGen) + SATV + White + Male)
+summary(five)
+six <- lm(GPA ~ HSGPA + factor(FirstGen) + SATV + White)
+summary(six)
