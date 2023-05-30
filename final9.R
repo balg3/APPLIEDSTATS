@@ -4,6 +4,7 @@ GUKR71FL <- read_dta("GUKR71FL.DTA")
 library(ggplot2)
 attach(GUKR71FL)
 
+#Graphical Stuff
 hemowealeth <- ggplot(GUKR71FL, aes(v191, hw56, color = factor(v131)))+
   geom_point(alpha=0.4)+
   labs(
@@ -132,20 +133,30 @@ GUKR71FL$v131x <- ifelse(GUKR71FL$v131 == 1, 1, NA)
 GUKR71FL$v131x <- ifelse(GUKR71FL$v131 == 2, 0, GUKR71FL$v131x)
 factor(GUKR71FL$v131)
 
+GUKR71FL$v414hx <- NA
+GUKR71FL$v414hx <-
+
 attach(GUKR71FL)
 
-summary(aov(hw56 ~ v190 + v131x)) 
-summary(aov(hw56 ~ v113 + v131x))
-summary(aov(hw56 ~ v414h + v131x))
-summary(aov(hw56 ~ v414h + v131x))
+summary(aov(hw56 ~ factor(v190) + factor(v131x))) 
+summary(aov(hw56 ~ factor(v113) + factor(v131x)))
+summary(aov(hw56 ~ factor(v414h) + factor(v131x)))
+summary(aov(hw56 ~ factor(v205) + factor(v131x)))
+summary(aov(hw56 ~ factor(h11) + factor(v131x)))
+summary(aov(hw56 ~ factor(h22) + factor(v131x))) 
+summary(aov(hw56 ~ factor(v127) + factor(v131x)))
+
 TukeyHSD()
 
 
 
 #MULTIPLE REGRESSION HEMOGLOBIN PREDICTION
 
-lm1<-lm(hw56~)
+
+
+lm1<-lm(hw56~factor(v131x) + v113 + )
 
 #LOGISTIC REGRESSION ETHNICITY PREDICTION
 
-glm<-lm(v131x~)
+glm<-glm(v131x~factor(v414h), family = binomial(link = "logit"))
+summary(glm)
