@@ -3,6 +3,10 @@ library(haven)
 GUKR71FL <- read_dta("GUKR71FL.DTA")
 library(ggplot2)
 attach(GUKR71FL)
+library(rdhs)
+
+
+
 
 #Graphical Stuff
 hemowealeth <- ggplot(GUKR71FL, aes(v191, hw56, color = factor(v131)))+
@@ -29,7 +33,7 @@ hemowealeth
 GUKR71FL$Maya <- NA
 GUKR71FL$Maya <- ifelse(GUKR71FL$v131 == 1, GUKR71FL$hw56, NA)
 GUKR71FL$Mestizo <- NA
-GUKR71FL$Mestizo <- ifelse(GUKR71FL$v131 == 2, GUKR71FL$hw56, NA)
+GUKR71FL$Mestizo <- ifelse(GUKR71FL$v131 == 2, GUKR71FLz$hw56, NA)
 GUKR71FL$Garifuna <- NA
 GUKR71FL$Garifuna <- ifelse(GUKR71FL$v131 == 3, GUKR71FL$hw56, NA)
 GUKR71FL$Xinca <- NA
@@ -46,9 +50,9 @@ summary(lm(Xinca~v191))
 
 #graphs
 
-hemowealbox <- ggplot(GUKR71FL, aes(factor(v131), hw56, fill = factor(v190)))+
+hemowealbox <- ggplot(GUKR71FL, aes(factor(v131x), hw56, fill = factor(v190)))+
   geom_boxplot() +
-  facet_wrap(~factor(v131), scale="free") +
+  facet_wrap(~factor(v131x), scale="free") +
   labs(
     x = "Ethnicity",
     y = "Hemoglobin in Decigram/dl",
@@ -58,9 +62,9 @@ hemowealbox <- ggplot(GUKR71FL, aes(factor(v131), hw56, fill = factor(v190)))+
 hemowealbox                        
 
 
-hemowealwat <- ggplot(GUKR71FL, aes(factor(v113), hw56, fill = factor(v190)))+
+hemowealwat <- ggplot(GUKR71FL, aes(factor(v113x), hw56, fill = factor(v190)))+
   geom_boxplot() +
-  facet_wrap(~factor(v113), scale="free") +
+  facet_wrap(~factor(v113x), scale="free") +
   labs(
     x = "Water Source",
     y = "Hemoglobin in Decigram/dl",
@@ -69,9 +73,9 @@ hemowealwat <- ggplot(GUKR71FL, aes(factor(v113), hw56, fill = factor(v190)))+
   theme_bw()
 hemowealwat                        
 
-hemowealmeat <- ggplot(GUKR71FL, aes(factor(v414h), hw56, fill = factor(v190)))+
+hemowealmeat <- ggplot(GUKR71FL, aes(factor(v414hx), hw56, fill = factor(v190)))+
   geom_boxplot() +
-  facet_wrap(~factor(v414h), scale="free") +
+  facet_wrap(~factor(v414hx), scale="free") +
   labs(
     x = "Ate Meat",
     y = "Hemoglobin in Decigram/dl",
@@ -92,9 +96,9 @@ hemowealtoil <- ggplot(GUKR71FL, aes(factor(v205), hw56, fill = factor(v190)))+
   theme_bw()
 hemowealtoil
 
-hemowealdiar <- ggplot(GUKR71FL, aes(factor(h11), hw56, fill = factor(v190)))+
+hemowealdiar <- ggplot(GUKR71FL, aes(factor(h11x), hw56, fill = factor(v190)))+
   geom_boxplot() +
-  facet_wrap(~factor(h11), scale="free") +
+  facet_wrap(~factor(h11x), scale="free") +
   labs(
     x = "Diarrhea",
     y = "Hemoglobin in Decigram/dl",
@@ -103,9 +107,9 @@ hemowealdiar <- ggplot(GUKR71FL, aes(factor(h11), hw56, fill = factor(v190)))+
   theme_bw()
 hemowealdiar
 
-hemowealfev <- ggplot(GUKR71FL, aes(factor(h22), hw56, fill = factor(v190)))+
+hemowealfev <- ggplot(GUKR71FL, aes(factor(h22x), hw56, fill = factor(v190)))+
   geom_boxplot() +
-  facet_wrap(~factor(h22), scale="free") +
+  facet_wrap(~factor(h22x), scale="free") +
   labs(
     x = "Fever",
     y = "Hemoglobin in Decigram/dl",
@@ -114,48 +118,108 @@ hemowealfev <- ggplot(GUKR71FL, aes(factor(h22), hw56, fill = factor(v190)))+
   theme_bw()
 hemowealfev
 
-hemowealfloor <- ggplot(GUKR71FL, aes(factor(v127), hw56, fill = factor(v190)))+
+hemowealfloor <- ggplot(GUKR71FL, aes(factor(v127x), hw56, fill = factor(v190)))+
   geom_boxplot() +
-  facet_wrap(~factor(v127), scale="free") +
+  facet_wrap(~factor(v127x), scale="free") +
   labs(
     x = "Flooring Material",
     y = "Hemoglobin in Decigram/dl",
     fill = "Wealth Quintile"
   )+
-  theme_bw()+
-  coord_flip()
+  theme_bw()
 hemowealfloor
 
-#ANOVA/TukeyHSD
+#VARIABLES
 
 GUKR71FL$v131x <- NA
-GUKR71FL$v131x <- ifelse(GUKR71FL$v131 == 1, 1, NA)
+GUKR71FL$v131x <- ifelse(GUKR71FL$v131 == 1, 1, GUKR71FL$v131x)
 GUKR71FL$v131x <- ifelse(GUKR71FL$v131 == 2, 0, GUKR71FL$v131x)
 factor(GUKR71FL$v131)
 
 GUKR71FL$v414hx <- NA
-GUKR71FL$v414hx <-
+GUKR71FL$v414hx <- ifelse(GUKR71FL$v414h == 1, 1, GUKR71FL$v414hx)
+GUKR71FL$v414hx <- ifelse(GUKR71FL$v414h == 0, 0, GUKR71FL$v414hx)
+factor(GUKR71FL$v414h)
+
+GUKR71FL$h11x <- NA
+GUKR71FL$h11x <- ifelse(GUKR71FL$h11 == 2, 1, GUKR71FL$h11x)
+GUKR71FL$h11x <- ifelse(GUKR71FL$h11 == 0, 0, GUKR71FL$h11x)
+factor(GUKR71FL$h11)
+  
+GUKR71FL$h22x <- NA
+GUKR71FL$h22x <- ifelse(GUKR71FL$h22 == 1, 1, GUKR71FL$h22x)
+GUKR71FL$h22x <- ifelse(GUKR71FL$h22 == 0, 0, GUKR71FL$h22x)
+factor(GUKR71FL$h22)
+
+GUKR71FL$v113x <- NA
+GUKR71FL$v113x <- ifelse(GUKR71FL$v113 == 11, 1, GUKR71FL$v113x)
+GUKR71FL$v113x <- ifelse(GUKR71FL$v113 == 12, 1, GUKR71FL$v113x)
+GUKR71FL$v113x <- ifelse(GUKR71FL$v113 == 13, 1, GUKR71FL$v113x)
+GUKR71FL$v113x <- ifelse(GUKR71FL$v113 == 14, 1, GUKR71FL$v113x)
+GUKR71FL$v113x <- ifelse(GUKR71FL$v113 == 31, 3, GUKR71FL$v113x)
+GUKR71FL$v113x <- ifelse(GUKR71FL$v113 == 32, 3, GUKR71FL$v113x)
+GUKR71FL$v113x <- ifelse(GUKR71FL$v113 == 41, 4, GUKR71FL$v113x)
+GUKR71FL$v113x <- ifelse(GUKR71FL$v113 == 42, 4, GUKR71FL$v113x)
+GUKR71FL$v113x <- ifelse(GUKR71FL$v113 == 43, 4, GUKR71FL$v113x)
+GUKR71FL$v113x <- ifelse(GUKR71FL$v113 == 44, 4, GUKR71FL$v113x)
+GUKR71FL$v113x <- ifelse(GUKR71FL$v113 == 51, 5, GUKR71FL$v113x)
+GUKR71FL$v113x <- ifelse(GUKR71FL$v113 == 61, 6, GUKR71FL$v113x)
+GUKR71FL$v113x <- ifelse(GUKR71FL$v113 == 71, 6, GUKR71FL$v113x)
+factor(GUKR71FL$v113)
+
+GUKR71FL$v127x <- NA
+GUKR71FL$v127x <- ifelse(GUKR71FL$v127 == 11, 1, GUKR71FL$v127x)
+GUKR71FL$v127x <- ifelse(GUKR71FL$v127 == 21, 2, GUKR71FL$v127x)
+GUKR71FL$v127x <- ifelse(GUKR71FL$v127 == 23, 2, GUKR71FL$v127x)
+GUKR71FL$v127x <- ifelse(GUKR71FL$v127 == 31, 3, GUKR71FL$v127x)
+GUKR71FL$v127x <- ifelse(GUKR71FL$v127 == 32, 3, GUKR71FL$v127x)
+GUKR71FL$v127x <- ifelse(GUKR71FL$v127 == 33, 3, GUKR71FL$v127x)
+GUKR71FL$v127x <- ifelse(GUKR71FL$v127 == 34, 3, GUKR71FL$v127x)
+GUKR71FL$v127x <- ifelse(GUKR71FL$v127 == 35, 3, GUKR71FL$v127x)
+factor(GUKR71FL$v127)
+
+factor(GUKR71FL$v205)
+
 
 attach(GUKR71FL)
-
 summary(aov(hw56 ~ factor(v190) + factor(v131x))) 
-summary(aov(hw56 ~ factor(v113) + factor(v131x)))
-summary(aov(hw56 ~ factor(v414h) + factor(v131x)))
+
+summary(aov(hw56 ~ factor(v113x) + factor(v131x)))
+
+summary(aov(hw56 ~ factor(v414hx) + factor(v131x)))
+
 summary(aov(hw56 ~ factor(v205) + factor(v131x)))
-summary(aov(hw56 ~ factor(h11) + factor(v131x)))
-summary(aov(hw56 ~ factor(h22) + factor(v131x))) 
-summary(aov(hw56 ~ factor(v127) + factor(v131x)))
+
+summary(aov(hw56 ~ factor(h11x) + factor(v131x)))
+
+summary(aov(hw56 ~ factor(h22x) + factor(v131x))) 
+
+summary(aov(hw56 ~ factor(v127x) + factor(v131x)))
+
+
+summary(aov(hw56 ~ factor(v190)))
+
+summary(aov(hw56 ~ factor(v113x)))
+
+summary(aov(hw56 ~ factor(v414hx)))
+
+summary(aov(hw56 ~ factor(v205)))
+
+summary(aov(hw56 ~ factor(h11x)))
+
+summary(aov(hw56 ~ factor(h22x)))
+
+summary(aov(hw56 ~ factor(v127x)))
+
 
 TukeyHSD()
 
-
-
 #MULTIPLE REGRESSION HEMOGLOBIN PREDICTION
+attach(GUKR71FL)
 
 
-
-lm1<-lm(hw56~factor(v131x) + v113 + )
-
+lm1<-lm(hw56~factor(v131x) + factor(v113x) + factor(h11))
+summary(lm1)
 #LOGISTIC REGRESSION ETHNICITY PREDICTION
 
 glm<-glm(v131x~factor(v414h), family = binomial(link = "logit"))
